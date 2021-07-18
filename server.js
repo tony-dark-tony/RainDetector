@@ -1,21 +1,18 @@
 const express = require('express');
-
+const { exec } = require("child_process");
 const app = express();
 app.use(express.json())
-app.post("/", (req, res) => {
-    var status = req.body.status;
-    try{
-        if(status == "1"){
-            //Playing command
-            console.log("Raining")
+app.get("/", (req, res)=>{
+    exec("speaker-test -c2 --test=wav -w /usr/share/sounds/alsa/Front_Center.wav", (error, stdout, stderr) => {
+        if (error) {
+            console.log(`error: ${error.message}`);
+            return;
         }
-        if(status == "0"){
-            //Stop command
-            console.log("Stopped")
+        if (stderr) {
+            console.log(`stderr: ${stderr}`);
+            return;
         }
-        res.sendStatus(200)
-    }catch(err){
-        res.send(err)
-    }
+        console.log(`stdout: ${stdout}`);
+    });
 })
 app.listen(1212);
