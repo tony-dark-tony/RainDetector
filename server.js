@@ -1,18 +1,9 @@
 const express = require('express');
 const { exec } = require("child_process");
 const app = express();
+const axios = require('axios');
 app.use(express.json())
 app.get("/", (req, res)=>{
-    exec("speaker-test -c2 --test=wav -w /usr/share/sounds/alsa/Front_Center.wav", (error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-    });
+    axios.get("https://api.telegram.org/bot1937895124:AAGREoiVTtv8m22nGVoT68tsL81MxI9Ah1M/sendMessage?chat_id=-546716562&text=C%C3%B3%20m%C6%B0a")
 })
 app.listen(1212);
